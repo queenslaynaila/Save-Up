@@ -1,23 +1,33 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React from "react";
-import { jsx, css } from "@emotion/react";
+import { jsx, css ,Global} from "@emotion/react";
+import {  Routes, Route } from 'react-router-dom';
+import Navbar from "./components/Navbar";
+import Welcome from "./pages/Welcome";
+import Savings from "./pages/Savings";
+import Goal from  './pages/Goal'
 function App() {
+  const globalStyles = css`
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  body {
+    font-family: "Poly", sans-serif;
+    scroll-behavior: smooth;
+  }
+`;
+
   return (
-    <div
-      css={css`
-        font-family: "Poly", sans-serif; 
-        padding: 32px;
-        background-color: rgb(130, 255, 105);
-        font-size: 24px;
-        border-radius: 4px;
-        &:hover {
-          color: hotpink;
-        }
-      `}
-      className="App"
-    >
-      Hover to change color.
+    <div>
+       <Global styles={globalStyles} />
+       <Navbar/>
+       <Routes>
+        <Route path="/" element={<Welcome />} />
+          <Route path="/savings" element={<Savings/>} />
+          <Route path="/savings/:id" element={<Goal />} />
+       </Routes>
     </div>
   );
 }
