@@ -6,7 +6,6 @@ import { HiOutlineMenuAlt2 } from 'react-icons/hi';
 import { BsFlower1 } from 'react-icons/bs';
 import { AiFillHome } from 'react-icons/ai';
 import { GoGoal } from 'react-icons/go';
-import { IoCreateSharp } from 'react-icons/io5';
 import { CiStickyNote } from 'react-icons/ci';
 
 const Navbar = () => {
@@ -44,7 +43,7 @@ const Navbar = () => {
   const logoName = css({
     color: '#dc3545',
     marginLeft: '0.5rem',
-    fontSize: '24px', // Increase font size
+    fontSize: '24px',  
     fontWeight:'bold'
   });
 
@@ -78,17 +77,12 @@ const Navbar = () => {
           </Link>
         </li>
         <li>
-          <Link to="/goals" css={navItem}>
+          <Link to="savings" css={navItem}>
             <GoGoal />
             Goals
           </Link>
         </li>
-        <li  >
-          <Link to="/Create Goal" css={navItem}>
-            <IoCreateSharp />
-            Create Goal
-          </Link>
-        </li>
+       
         <li>
           <Link to="/Summary" css={navItem}>
             <CiStickyNote   />
