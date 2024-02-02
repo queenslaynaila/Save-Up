@@ -1,9 +1,9 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { IoAddCircle } from 'react-icons/io5';
-import ModalForm from '../components/ModalForm';
-import { jsx, css } from '@emotion/react';
-import   { useState } from 'react';
+import { IoAddCircle } from "react-icons/io5";
+import ModalForm from "../components/ModalForm";
+import { jsx, css } from "@emotion/react";
+import { useState } from "react";
 const cardStyles = css`
   background-color: #dc3545;
   border-radius: 10px;
@@ -34,9 +34,9 @@ const modalStyles = (props: { isOpen: boolean }) => css`
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  display: ${props.isOpen ? 'block' : 'none'};
+  display: ${props.isOpen ? "block" : "none"};
   z-index: 2;
-  width: 80%; 
+  width: 80%;
 `;
 const modalOverlayStyles = (props: { isOpen: boolean }) => css`
   position: fixed;
@@ -45,23 +45,26 @@ const modalOverlayStyles = (props: { isOpen: boolean }) => css`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${props.isOpen ? 'block' : 'none'};
+  display: ${props.isOpen ? "block" : "none"};
   z-index: 1;
 `;
 export default function CreateSavingCard() {
-    const [isModalOpen, setModalOpen] = useState(false);
-    const openModal = () => setModalOpen(true);
-    const closeModal = () => setModalOpen(false);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const openModal = () => setModalOpen(true);
+  const closeModal = () => setModalOpen(false);
   return (
     <div css={cardStyles}>
-    <p css={amountStyles}>You have saved KES 0</p>
-    <button css={buttonStyles} onClick={openModal}>
-      <IoAddCircle fontSize="20px" />
-    </button>
-    <div css={() => modalOverlayStyles({ isOpen: isModalOpen })} onClick={closeModal}></div>
-    <div css={() => modalStyles({ isOpen: isModalOpen })}>
-      <ModalForm />
+      <p css={amountStyles}>You have saved KES 0</p>
+      <button css={buttonStyles} onClick={openModal}>
+        <IoAddCircle fontSize="20px" />
+      </button>
+      <div
+        css={() => modalOverlayStyles({ isOpen: isModalOpen })}
+        onClick={closeModal}
+      ></div>
+      <div css={() => modalStyles({ isOpen: isModalOpen })}>
+        <ModalForm />
+      </div>
     </div>
-  </div>
-  )
+  );
 }

@@ -1,8 +1,8 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import React, { useState, useContext  } from 'react';
-import SavingsContext from '../context/SavingsContext';
+import { jsx, css } from "@emotion/react";
+import React, { useState, useContext } from "react";
+import SavingsContext from "../context/SavingsContext";
 
 const modalContentStyles = css`
   padding: 8px;
@@ -37,16 +37,18 @@ const modalContentStyles = css`
 
 const ModalForm = () => {
   const { addSaving } = useContext(SavingsContext);
-  
+
   // State to manage form values
   const [formData, setFormData] = useState({
-    name: '',
-    targetAmount: '',
-    savingFrequency: 'daily', // Default value
+    name: "",
+    targetAmount: "",
+    savingFrequency: "daily", // Default value
   });
 
   // Handle input changes
-  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
+  ) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
       ...prevData,
@@ -55,22 +57,22 @@ const ModalForm = () => {
   };
 
   // Handle form submission
-  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
+
     // Call addSaving function with form data
     addSaving({
       description: formData.name,
       targetAmount: parseFloat(formData.targetAmount),
       category: formData.savingFrequency,
-      contributedAmount: 0, 
+      contributedAmount: 0,
     });
 
     // Reset form after submission
     setFormData({
-      name: '',
-      targetAmount: '',
-      savingFrequency: 'daily',
+      name: "",
+      targetAmount: "",
+      savingFrequency: "daily",
     });
   };
 

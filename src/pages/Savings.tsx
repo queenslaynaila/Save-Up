@@ -1,10 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import SavingCard from '../components/SavingCard';
-import SavingsContext from '../context/SavingsContext';
-import { useContext } from 'react';
-import CreateSavingCard from '../components/CreateSavingCard';
+import { jsx, css } from "@emotion/react";
+import SavingCard from "../components/SavingCard";
+import SavingsContext from "../context/SavingsContext";
+import { useContext } from "react";
+import CreateSavingCard from "../components/CreateSavingCard";
 const containerStyles = css`
   max-width: 100%;
   margin: auto;
@@ -18,19 +18,16 @@ const headerContainerStyles = css`
 `;
 
 const noSavingsContainerStyles = css`
-  
   padding: 20px;
   background-color: #fff;
   border: 1px solid #ddd;
   border-radius: 5px;
 `;
 
-const  textHea= css`
-  
+const textHea = css`
   padding: 10px;
-  margin-bottom:10px;
+  margin-bottom: 10px;
 `;
-
 
 const Savings = () => {
   const { savings } = useContext(SavingsContext);
@@ -38,10 +35,13 @@ const Savings = () => {
   if (savings.length === 0) {
     return (
       <div css={noSavingsContainerStyles}>
-        <div css={textHea}> <h2>You have no savings</h2>
-        <p>Start your saving journey here.</p></div>
-       
-         <CreateSavingCard/>
+        <div css={textHea}>
+          {" "}
+          <h2>You have no savings</h2>
+          <p>Start your saving journey here.</p>
+        </div>
+
+        <CreateSavingCard />
       </div>
     );
   }

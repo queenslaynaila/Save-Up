@@ -1,10 +1,10 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import React, {  useContext } from 'react';
-import SavingsContext from '../context/SavingsContext';
-import { jsx, css } from '@emotion/react';
+import React, { useContext } from "react";
+import SavingsContext from "../context/SavingsContext";
+import { jsx, css } from "@emotion/react";
 import { FaMoneyBillTransfer } from "react-icons/fa6";
- 
+
 const containerStyles = css`
   max-width: 100%;
   margin: auto;
@@ -72,20 +72,23 @@ const cardStyles = css`
     justify-content: center;
     align-items: center;
     font-size: 18px;
-     
-    
   }
 `;
 
 export default function Summary() {
-  const { savings, contributions, totalContributions, totalTargetedAmount } = useContext(SavingsContext);
-  console.log(savings)
+  const { savings, contributions, totalContributions, totalTargetedAmount } =
+    useContext(SavingsContext);
+  console.log(savings);
 
   // Function to combine contribution with corresponding saving description
-  const combineContributionsWithSavingNames = ()  => {
+  const combineContributionsWithSavingNames = () => {
     return contributions.map((contribution) => {
-      const correspondingSaving = savings.find((saving) => saving.id === contribution.savingId);
-      const contributionName = correspondingSaving ? correspondingSaving.description : 'Unknown Saving';
+      const correspondingSaving = savings.find(
+        (saving) => saving.id === contribution.savingId,
+      );
+      const contributionName = correspondingSaving
+        ? correspondingSaving.description
+        : "Unknown Saving";
       return { ...contribution, contributionName };
     });
   };
@@ -97,17 +100,18 @@ export default function Summary() {
       <h3>Here Are Your Cumulatives</h3>
       <ul>
         {combinedContributions.map((combinedContribution) => (
-          
           <div css={cardStyles}>
-          <div className="icon-section">
-          <FaMoneyBillTransfer />
+            <div className="icon-section">
+              <FaMoneyBillTransfer />
+            </div>
+            <div className="text-section">
+              <div className="date">{combinedContribution.date}</div>
+              <div className="name">
+                {combinedContribution.contributionName}
+              </div>
+            </div>
+            <p className="amount-section">KES {combinedContribution.amount}</p>
           </div>
-          <div className="text-section">
-            <div className="date">{combinedContribution.date}</div>
-            <div className="name">{combinedContribution.contributionName}</div>
-          </div>
-          <p className="amount-section">KES {combinedContribution.amount}</p>
-        </div>
         ))}
       </ul>
     </div>

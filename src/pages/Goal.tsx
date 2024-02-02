@@ -1,11 +1,11 @@
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import { useParams, useNavigate } from 'react-router-dom';
-import GoalDetailsCard from '../components/GoalDetailsCard';
-import GoalForm from '../components/GoalForm';
-import SavingsContext from '../context/SavingsContext';
-import { useContext, useState, useEffect } from 'react';
+import { jsx, css } from "@emotion/react";
+import { useParams, useNavigate } from "react-router-dom";
+import GoalDetailsCard from "../components/GoalDetailsCard";
+import GoalForm from "../components/GoalForm";
+import SavingsContext from "../context/SavingsContext";
+import { useContext, useState, useEffect } from "react";
 
 const containerStyles = css`
   max-width: 100%;
@@ -43,7 +43,7 @@ const modalStyles = (props: { isOpen: boolean }) => css`
   background-color: white;
   padding: 20px;
   border-radius: 10px;
-  display: ${props.isOpen ? 'block' : 'none'};
+  display: ${props.isOpen ? "block" : "none"};
   z-index: 2;
   width: 80%;
 `;
@@ -55,7 +55,7 @@ const modalOverlayStyles = (props: { isOpen: boolean }) => css`
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
-  display: ${props.isOpen ? 'block' : 'none'};
+  display: ${props.isOpen ? "block" : "none"};
   z-index: 1;
 `;
 
@@ -63,8 +63,8 @@ const Goal = () => {
   const { id } = useParams();
   const { savings, deleteSaving } = useContext(SavingsContext);
   const [goalData, setGoalData] = useState({
-    description: '',
-    category: '',
+    description: "",
+    category: "",
     targetAmount: 0,
     contributedAmount: 0,
   });
@@ -78,22 +78,22 @@ const Goal = () => {
   }, [id, savings]);
 
   const [isModalOpen, setModalOpen] = useState(false);
-  
-  const closeModal = () => setModalOpen(false);
 
- 
+  const closeModal = () => setModalOpen(false);
 
   const handleDeleteGoal = () => {
     setTimeout(() => {
       deleteSaving(id!);
-      navigate('/savings');
-    }, 1000);  
+      navigate("/savings");
+    }, 1000);
   };
 
   return (
     <div css={containerStyles}>
       <h2>{goalData.description}</h2>
-      <p css={balanceStyles}>Balance: {goalData.targetAmount - goalData.contributedAmount}</p>
+      <p css={balanceStyles}>
+        Balance: {goalData.targetAmount - goalData.contributedAmount}
+      </p>
       <div
         css={css`
           text-align: center;
@@ -103,7 +103,10 @@ const Goal = () => {
         <button onClick={() => setModalOpen(true)}>Top Up</button>
       </div>
 
-      <div css={() => modalOverlayStyles({ isOpen: isModalOpen })} onClick={closeModal}></div>
+      <div
+        css={() => modalOverlayStyles({ isOpen: isModalOpen })}
+        onClick={closeModal}
+      ></div>
       <div css={() => modalStyles({ isOpen: isModalOpen })}>
         <h3>Top Up to Your Goal</h3>
         <GoalForm id={id!} />

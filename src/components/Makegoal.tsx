@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
+import { jsx, css } from "@emotion/react";
 
 const formContainerStyles = css`
   max-width: 400px;
@@ -28,7 +28,7 @@ const selectStyles = css`
 
 const buttonStyles = css`
   background-color: #dc3545;
-  outline:'none';
+  outline: "none";
   color: white;
   padding: 10px;
   font-size: 16px;
@@ -38,7 +38,7 @@ const buttonStyles = css`
 const MakeGoal = () => {
   return (
     <div css={formContainerStyles}>
-      <h2 css={{ textAlign: 'center' }}>Make a Savings Goal</h2>
+      <h2 css={{ textAlign: "center" }}>Make a Savings Goal</h2>
       <form css={formStyles}>
         <label htmlFor="goalName">Description:</label>
         <input type="text" id="goalName" css={inputStyles} />

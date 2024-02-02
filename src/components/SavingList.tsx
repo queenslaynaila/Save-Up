@@ -1,11 +1,10 @@
- 
-import SavingCard from './SavingCard';
-import SavingsContext from '../context/SavingsContext';
-import { useContext } from 'react';
+import SavingCard from "./SavingCard";
+import SavingsContext from "../context/SavingsContext";
+import { useContext } from "react";
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { jsx, css } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 const containerStyles = css`
   max-width: 100%;
@@ -30,9 +29,8 @@ const headerContainerStyles = css`
 const SavingList = () => {
   const navigate = useNavigate();
   const handleClick = () => {
-    navigate('/savings');
+    navigate("/savings");
   };
-  
 
   const { savings } = useContext(SavingsContext);
   return (
@@ -42,8 +40,14 @@ const SavingList = () => {
         <button onClick={handleClick}>View All Goals</button>
       </div>
       {savings.map((saving) => (
-        <SavingCard  key={saving.id} description={saving.description}
-        category={saving.category} targetAmount={saving.targetAmount} contributedAmount={saving.contributedAmount} id={saving.id}  />
+        <SavingCard
+          key={saving.id}
+          description={saving.description}
+          category={saving.category}
+          targetAmount={saving.targetAmount}
+          contributedAmount={saving.contributedAmount}
+          id={saving.id}
+        />
       ))}
     </div>
   );

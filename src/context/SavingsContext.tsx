@@ -40,33 +40,33 @@ const SavingsContext = createContext<SavingsContextType>({
   updateContributedAmount: (id: string, amount: number) => {},
   getSavingById: (id: string) => undefined,
 });
- 
+
 export function SavingsProvider({ children }: SavingsContextProps) {
- 
   const savingsLocalStorageKey = "savings";
   const contributionsLocalStorageKey = "contributions";
-  
+
   const getStoredSavings = (): Saving[] => {
     const storedData = localStorage.getItem(savingsLocalStorageKey);
     return storedData ? JSON.parse(storedData) : [];
   };
-  
+
   const setStoredSavings = (data: Saving[]) => {
     localStorage.setItem(savingsLocalStorageKey, JSON.stringify(data));
   };
-  
+
   const getStoredContributions = (): Contribution[] => {
     const storedData = localStorage.getItem(contributionsLocalStorageKey);
     return storedData ? JSON.parse(storedData) : [];
   };
-  
+
   const setStoredContributions = (data: Contribution[]) => {
     localStorage.setItem(contributionsLocalStorageKey, JSON.stringify(data));
   };
-  
+
   const [savings, setSavings] = React.useState<Saving[]>(getStoredSavings);
-  const [contributions, setContributions] = React.useState<Contribution[]>(getStoredContributions);
-  
+  const [contributions, setContributions] = React.useState<Contribution[]>(
+    getStoredContributions,
+  );
 
   const addSavingHandler = (newSaving: Saving) => {
     setSavings((prev) => [...prev, { ...newSaving, id: uuidv4() }]);
@@ -81,25 +81,26 @@ export function SavingsProvider({ children }: SavingsContextProps) {
       prev.map((saving) =>
         saving.id === id
           ? { ...saving, contributedAmount: saving.contributedAmount + amount }
-          : saving
-      )
+          : saving,
+      ),
     );
-  
+
     const newContribution: Contribution = {
       id: uuidv4(),
-      savingId: id,   
+      savingId: id,
       amount: amount,
       date: new Date().toISOString(),
     };
-  
+
     setContributions((prev) => [...prev, newContribution]);
   };
-  
-  
-  
+
   React.useEffect(() => {
     setTotalContributions(
-      contributions.reduce((total, contribution) => total + contribution.amount, 0)
+      contributions.reduce(
+        (total, contribution) => total + contribution.amount,
+        0,
+      ),
     );
   }, [contributions]);
 
@@ -110,20 +111,24 @@ export function SavingsProvider({ children }: SavingsContextProps) {
   React.useEffect(() => {
     setStoredSavings(savings);
     setStoredContributions(contributions);
-  }, [savings,contributions]);
+  }, [savings, contributions]);
 
   const [totalContributions, setTotalContributions] = React.useState<number>(0);
-  const [totalTargetedAmount,  setTotalTargetedAmount] = React.useState<number>(0);
+  const [totalTargetedAmount, setTotalTargetedAmount] =
+    React.useState<number>(0);
 
   React.useEffect(() => {
     setTotalContributions(
-      contributions.reduce((total, contribution) => total + contribution.amount, 0)
+      contributions.reduce(
+        (total, contribution) => total + contribution.amount,
+        0,
+      ),
     );
   }, [contributions]);
 
   React.useEffect(() => {
     setTotalTargetedAmount(
-      savings.reduce((total, saving) => total + saving.targetAmount, 0)
+      savings.reduce((total, saving) => total + saving.targetAmount, 0),
     );
   }, [savings]);
 
@@ -137,7 +142,6 @@ export function SavingsProvider({ children }: SavingsContextProps) {
     updateContributedAmount: updateContributedAmountHandler,
     getSavingById: getSavingByIdHandler,
   };
-
 
   return (
     <SavingsContext.Provider value={context}>

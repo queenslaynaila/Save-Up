@@ -1,17 +1,15 @@
 // SavingCard.js
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import { jsx, css } from '@emotion/react';
-import { useNavigate } from 'react-router-dom';
+import { jsx, css } from "@emotion/react";
+import { useNavigate } from "react-router-dom";
 
 type SavingCardProps = {
-
   description: string;
   category: string;
   targetAmount: number;
   contributedAmount: number;
-  id?:string;
-  
+  id?: string;
 };
 
 const cardStyles = css`
@@ -32,22 +30,29 @@ const progressBarContainer = css`
 const progressBar = css`
   height: 100%;
   border-radius: 5px;
-  background-color: #dc3545;  
+  background-color: #dc3545;
 `;
 
-const SavingCard =  ({ description, category, contributedAmount, targetAmount,id  }: SavingCardProps) => {
+const SavingCard = ({
+  description,
+  category,
+  contributedAmount,
+  targetAmount,
+  id,
+}: SavingCardProps) => {
   const navigate = useNavigate();
   const handleCardClick = () => {
-    if (id){  navigate(`/savings/${id}`);}
-  
+    if (id) {
+      navigate(`/savings/${id}`);
+    }
   };
   return (
-    <div css={cardStyles} onClick={handleCardClick}  >
+    <div css={cardStyles} onClick={handleCardClick}>
       <h3>{description}</h3>
       <h3>{category}</h3>
       <span>
-  Progress: {((contributedAmount / targetAmount) * 100).toFixed(2)}%
-</span>
+        Progress: {((contributedAmount / targetAmount) * 100).toFixed(2)}%
+      </span>
 
       <div css={progressBarContainer}>
         <div
