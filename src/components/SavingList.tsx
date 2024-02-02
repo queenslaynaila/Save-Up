@@ -1,8 +1,8 @@
+/** @jsxRuntime classic */
+/** @jsx jsx */
 import SavingCard from "./SavingCard";
 import SavingsContext from "../context/SavingsContext";
 import { useContext } from "react";
-/** @jsxRuntime classic */
-/** @jsx jsx */
 import { jsx, css } from "@emotion/react";
 import { useNavigate } from "react-router-dom";
 
