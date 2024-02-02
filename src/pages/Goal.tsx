@@ -1,11 +1,12 @@
-
 /** @jsxRuntime classic */
 /** @jsx jsx */
-import  { useState } from 'react';
 import { jsx, css } from '@emotion/react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import GoalDetailsCard from '../components/GoalDetailsCard';
 import GoalForm from '../components/GoalForm';
+import SavingsContext from '../context/SavingsContext';
+import { useContext, useState, useEffect } from 'react';
+
 const containerStyles = css`
   max-width: 100%;
   margin: auto;
@@ -34,7 +35,6 @@ const balanceStyles = css`
   color: gray;
 `;
 
-
 const modalStyles = (props: { isOpen: boolean }) => css`
   position: fixed;
   top: 50%;
@@ -45,7 +45,7 @@ const modalStyles = (props: { isOpen: boolean }) => css`
   border-radius: 10px;
   display: ${props.isOpen ? 'block' : 'none'};
   z-index: 2;
-  width: 80%; 
+  width: 80%;
 `;
 
 const modalOverlayStyles = (props: { isOpen: boolean }) => css`
@@ -59,34 +59,37 @@ const modalOverlayStyles = (props: { isOpen: boolean }) => css`
   z-index: 1;
 `;
 
- 
 const Goal = () => {
   const { id } = useParams();
-  
-  const goalData = {
-    description: 'Emergency Fund',
-    category: 'Monthly',
-    targetAmount: 5000,
-    contributedAmount: 2000,
-  };
+  const { savings, deleteSaving } = useContext(SavingsContext);
+  const [goalData, setGoalData] = useState({
+    description: '',
+    category: '',
+    targetAmount: 0,
+    contributedAmount: 0,
+  });
+  const navigate = useNavigate();
 
- 
-  const [contributeAmount, setContributeAmount] = useState('');
+  useEffect(() => {
+    const goal = savings.find((saving) => saving.id === id);
+    if (goal) {
+      setGoalData(goal);
+    }
+  }, [id, savings]);
+
   const [isModalOpen, setModalOpen] = useState(false);
-  const openModal = () => setModalOpen(true);
-  const closeModal = () => setModalOpen(false);
- 
-  const handleContribute = () => {
-    console.log(`Contributing ${contributeAmount} to the goal`);
-    setModalOpen(false);
-  };
-
- 
-  const handleDeleteGoal = () => {
-    console.log('Deleting the goal');
-  };
-
   
+  const closeModal = () => setModalOpen(false);
+
+ 
+
+  const handleDeleteGoal = () => {
+    setTimeout(() => {
+      deleteSaving(id!);
+      navigate('/savings');
+    }, 1000);  
+  };
+
   return (
     <div css={containerStyles}>
       <h2>{goalData.description}</h2>
@@ -100,18 +103,12 @@ const Goal = () => {
         <button onClick={() => setModalOpen(true)}>Top Up</button>
       </div>
 
-    
-      <div
-          css={() => modalOverlayStyles({ isOpen: isModalOpen})}
-          onClick={closeModal}
-        ></div>
-      <div css={() => modalStyles({ isOpen: isModalOpen})}>
+      <div css={() => modalOverlayStyles({ isOpen: isModalOpen })} onClick={closeModal}></div>
+      <div css={() => modalStyles({ isOpen: isModalOpen })}>
         <h3>Top Up to Your Goal</h3>
-         <GoalForm/>
+        <GoalForm id={id!} />
       </div>
-      
-
-      <GoalDetailsCard goalData={goalData}/>
+      <GoalDetailsCard goalData={goalData} />
       <button onClick={handleDeleteGoal}>Delete Goal</button>
     </div>
   );
