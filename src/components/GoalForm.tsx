@@ -2,6 +2,13 @@
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
 import  { useState } from 'react';
+import SavingsContext from '../context/SavingsContext';
+import { useContext } from 'react';
+
+type GoalFormProps = {
+  id: string | undefined 
+};
+
 const modalContentStyles = css`
      padding:8px;
   color: black; 
@@ -25,23 +32,19 @@ const modalContentStyles = css`
   }
   
 `;
-const GoalForm = () => {
-    const [contributeAmount, setContributeAmount] = useState('');
-    const handleContribute = () => {
-        // Add your logic to update the contributed amount in the database or state
-        console.log(`Contributing ${contributeAmount} to the goal`);
-        // Close the modal after contributing
-        
-      };
+const GoalForm: React.FC<GoalFormProps> = (props) => {
+  const {  updateContributedAmount } = useContext(SavingsContext);
+    const [contributeAmount, setContributeAmount] = useState<number>(0);
+     
     return (
         <form  css={modalContentStyles}>
         <label>Enter Amount:</label>
         <input
           type="number"
           value={contributeAmount}
-          onChange={(e) => setContributeAmount(e.target.value)}
+          onChange={(e) => setContributeAmount(parseInt(e.target.value, 10))}
         />
-        <button type="button" onClick={handleContribute}>
+        <button type="button" onClick={()=>updateContributedAmount(props.id!,contributeAmount)}  >
           Top Up
         </button>
       </form>
