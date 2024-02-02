@@ -1,6 +1,7 @@
  
-import savingsData from './data';
 import SavingCard from './SavingCard';
+import SavingsContext from '../context/SavingsContext';
+import { useContext } from 'react';
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
@@ -26,22 +27,23 @@ const headerContainerStyles = css`
   }
 `;
 
-
 const SavingList = () => {
-
   const navigate = useNavigate();
   const handleClick = () => {
     navigate('/savings');
   };
+  
 
+  const { savings } = useContext(SavingsContext);
   return (
     <div css={containerStyles}>
       <div css={headerContainerStyles}>
         <h2>Your Saving Goals</h2>
         <button onClick={handleClick}>View All Goals</button>
       </div>
-      {savingsData.map((saving, index) => (
-        <SavingCard saving={saving} key={index}/>
+      {savings.map((saving) => (
+        <SavingCard  key={saving.id} description={saving.description}
+        category={saving.category} targetAmount={saving.targetAmount} contributedAmount={saving.contributedAmount} id={saving.id}  />
       ))}
     </div>
   );

@@ -1,7 +1,8 @@
- 
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
+import React, { useState, useContext  } from 'react';
+import SavingsContext from '../context/SavingsContext';
 
 const modalContentStyles = css`
   padding: 8px;
@@ -35,15 +36,70 @@ const modalContentStyles = css`
 `;
 
 const ModalForm = () => {
+  const { addSaving } = useContext(SavingsContext);
+  
+  // State to manage form values
+  const [formData, setFormData] = useState({
+    name: '',
+    targetAmount: '',
+    savingFrequency: 'daily', // Default value
+  });
+
+  // Handle input changes
+  const handleInputChange = (e:React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+
+  // Handle form submission
+  const handleSubmit = (e:React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    
+    // Call addSaving function with form data
+    addSaving({
+      description: formData.name,
+      targetAmount: parseFloat(formData.targetAmount),
+      category: formData.savingFrequency,
+      contributedAmount: 0, 
+    });
+
+    // Reset form after submission
+    setFormData({
+      name: '',
+      targetAmount: '',
+      savingFrequency: 'daily',
+    });
+  };
+
   return (
-    <form css={modalContentStyles}>
+    <form css={modalContentStyles} onSubmit={handleSubmit}>
       <h3>Create Saving Goal</h3>
       <label>Name:</label>
-      <input type="text" required />
+      <input
+        type="text"
+        name="name"
+        value={formData.name}
+        onChange={handleInputChange}
+        required
+      />
       <label>Target Amount:</label>
-      <input type="number" required />
+      <input
+        type="number"
+        name="targetAmount"
+        value={formData.targetAmount}
+        onChange={handleInputChange}
+        required
+      />
       <label>Saving Frequency:</label>
-      <select required>
+      <select
+        name="savingFrequency"
+        value={formData.savingFrequency}
+        onChange={handleInputChange}
+        required
+      >
         <option value="daily">Daily</option>
         <option value="weekly">Weekly</option>
         <option value="monthly">Monthly</option>

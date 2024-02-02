@@ -1,5 +1,5 @@
-// Welcome.js
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
+import SavingsContext from '../context/SavingsContext';
 /** @jsxRuntime classic */
 /** @jsx jsx */
 import { jsx, css } from '@emotion/react';
@@ -10,6 +10,9 @@ const containerStyles = css`
   max-width: 100%;
   margin: auto;
   padding: 18px;
+  h2{
+    margin-bottom:20px;
+  }
 `;
 
 const cardStyles = css`
@@ -60,30 +63,49 @@ const Welcome = () => {
   const [isModalOpen, setModalOpen] = useState(false);
   const openModal = () => setModalOpen(true);
   const closeModal = () => setModalOpen(false);
+  const { savings,   totalTargetedAmount, totalContributions  } = useContext(SavingsContext);
 
+ 
+ 
+  
   return (
     <div css={containerStyles}>
-      <h2
-        css={css`
-          padding: 2px;
-          margin-bottom: 12px;
-        `}
-      >
-        Welcome, User
-      </h2>
-      <div css={cardStyles}>
-        <p css={amountStyles}>You have saved KES 100,000</p>
-        <button css={buttonStyles} onClick={openModal}>
-          <IoAddCircle fontSize="20px" />
-        </button>
-        <div css={() => modalOverlayStyles({ isOpen: isModalOpen })} onClick={closeModal}></div>
-        <div css={() => modalStyles({ isOpen: isModalOpen })}>
-          <ModalForm />
-        </div>
-      </div>
-      <SavingList/>
+      {savings.length === 0 ? (
+        <>
+          <h2>Welcome, start your saving journey here!</h2>
+          <div css={cardStyles}>
+            <p css={amountStyles}>You have saved KES 0</p>
+           
+            <button css={buttonStyles} onClick={openModal}>
+              <IoAddCircle fontSize="20px" />
+            </button>
+            <div css={() => modalOverlayStyles({ isOpen: isModalOpen })} onClick={closeModal}></div>
+            <div css={() => modalStyles({ isOpen: isModalOpen })}>
+              <ModalForm />
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <h2>Continue your saving journey</h2>
+          <div css={cardStyles}>
+            <p css={amountStyles}>You have saved KES {totalContributions}</p>
+             <small>Your target is {  totalTargetedAmount}</small><br></br>
+            <button css={buttonStyles} onClick={openModal}>
+              <IoAddCircle fontSize="20px" />
+            </button>
+            <div css={() => modalOverlayStyles({ isOpen: isModalOpen })} onClick={closeModal}></div>
+            <div css={() => modalStyles({ isOpen: isModalOpen })}>
+              <ModalForm />
+            </div>
+          </div>
+          <SavingList />
+        </>
+      )}
     </div>
   );
 };
 
 export default Welcome;
+
+ 
