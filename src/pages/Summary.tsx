@@ -74,11 +74,35 @@ const cardStyles = css`
     font-size: 18px;
   }
 `;
+const totalCardStyles = css`
+background-color: #f9f9f9;
+border: 1px solid #e0e0e0;
+border-radius: 8px;
+padding: 16px;
+margin-top: 16px;
+display: flex;
+justify-content: space-between;
+align-items: center;
 
+.total-section {
+  display: flex;
+  flex-direction: column;
+
+  .label {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 4px;
+  }
+
+  .value {
+    font-size: 18px;
+  }
+}
+`;
 export default function Summary() {
-  const { savings, contributions, totalContributions, totalTargetedAmount } =
+  const { savings, contributions,totalTargetedAmount,totalContributions } =
     useContext(SavingsContext);
-  console.log(savings);
+  
 
   // Function to combine contribution with corresponding saving description
   const combineContributionsWithSavingNames = () => {
@@ -114,6 +138,16 @@ export default function Summary() {
           </div>
         ))}
       </ul>
+      <div css={totalCardStyles}>
+        <div className="total-section">
+          <div className="label">Total Targeted Amount</div>
+          <div className="value">KES {totalTargetedAmount}</div>
+        </div>
+        <div className="total-section">
+          <div className="label">Total Contributions</div>
+          <div className="value">KES {totalContributions}</div>
+        </div>
+      </div>
     </div>
   );
 }
