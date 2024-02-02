@@ -39,7 +39,7 @@ const SavingList = () => {
         <h2>Your Saving Goals</h2>
         <button onClick={handleClick}>View All Goals</button>
       </div>
-      {savings.map((saving) => (
+      {savings.slice(0, 3).map((saving) => (
         <SavingCard
           key={saving.id}
           description={saving.description}
