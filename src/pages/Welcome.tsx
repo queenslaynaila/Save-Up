@@ -69,7 +69,7 @@ const Welcome = () => {
   return (
     <div css={containerStyles}>
       {savings.length === 0 ? (
-        <>
+        <div>
           <h2>Welcome, start your saving journey here!</h2>
           <div css={cardStyles}>
             <p css={amountStyles}>You have saved KES 0</p>
@@ -85,9 +85,9 @@ const Welcome = () => {
               <ModalForm />
             </div>
           </div>
-        </>
+        </div>
       ) : (
-        <>
+        <div>
           <h2>Continue your saving journey</h2>
           <div css={cardStyles}>
             <p css={amountStyles}>You have saved KES {totalContributions}</p>
@@ -105,7 +105,7 @@ const Welcome = () => {
             </div>
           </div>
           <SavingList />
-        </>
+        </div>
       )}
     </div>
   );
